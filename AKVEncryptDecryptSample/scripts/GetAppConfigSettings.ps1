@@ -116,7 +116,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 
 # Set the flag for Keytype as RSA-HSM; it should be non-exportable. Set the IssuerName as 'Self' since this would be
 # used only for dev testing. (It would be set to 'Unknown' if it is sent to a CA for signing and issuance)
-# set the Keyusage flags as shown. Data encryption is not enabled by default, unless specified
+# set the Keyusage flags as shown. Data encipherment is not enabled by default, unless specified - it is required for decryption
 $manualPolicy = New-AzureKeyVaultCertificatePolicy -SubjectName  "CN=demohsm.corpmobile.in,  
 		St=Karnataka, OU=IT, O=Demo Bank, STREET=Technology Links Park, L = Bangalore, 
 C=IN" -ValidityInMonths 24  -IssuerName Self -KeyType "RSA-HSM" -KeyNotExportable -KeyUsage keyEncipherment,digitalSignature,dataEncipherment
