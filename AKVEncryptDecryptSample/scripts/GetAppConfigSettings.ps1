@@ -9,10 +9,10 @@
 # **********************************************************************************************
 # You MUST set the following values before running this script
 # **********************************************************************************************
-$vaultName           = 'delakvsample'
-$resourceGroupName   = 'delakvsamplerg'
-$applicationName     = 'delakvapp001'
-$hsmcertificateName = "delprohsmcert"
+$vaultName           = 'hsmakvsample'
+$resourceGroupName   = 'hsmakvsamplerg'
+$applicationName     = 'hsmakvapp001'
+$hsmcertificateName = "hsmprohsmcert"
 
 # **********************************************************************************************
 # You MAY set the following values before running this script
