@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 namespace AKVEncryptDecryptSample
 {
     /// <summary>
-    /// This class mimics an application deployed outside Azure and which uses a X509 Certificate
-    /// to encrypt and sign the data before sending it to a receiving application in Azure. This certificate 
-    /// contains the Public Key for the corresponding Private Key residing in Azure Key Vault. It is used to
-    /// encrypt and sign the payload.
+    /// Sender mimics an application that uses a X509 Certificate to encrypt the data before sending it to a 
+    /// receiving application in Azure. This certificate contains the Public Key for the corresponding Private Key 
+    /// residing in Azure Key Vault. It is used to encrypt the payload.
     /// The X509 Certificate in this sample resides on the User's certificate Store on the local machine
-    /// This client program performs the encrypt/sign operations locally (as opposed to using AKV APIs to do the same)
+    /// This client program performs the encrypt operations locally (as opposed to using AKV APIs to do the same)
     /// </summary>
     class Sender
     {
