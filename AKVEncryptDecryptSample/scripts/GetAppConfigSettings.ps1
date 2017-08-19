@@ -9,10 +9,10 @@
 # **********************************************************************************************
 # You MUST set the following values before running this script
 # **********************************************************************************************
-$vaultName           = 'akvsample'
-$resourceGroupName   = 'akvsamplerg'
-$applicationName     = 'akvapp001'
-$certificateName = "prohsmcert"
+$vaultName           = 'delakvsample'
+$resourceGroupName   = 'delakvsamplerg'
+$applicationName     = 'delakvapp001'
+$hsmcertificateName = "delprohsmcert"
 
 # **********************************************************************************************
 # You MAY set the following values before running this script
@@ -121,12 +121,15 @@ $manualPolicy = New-AzureKeyVaultCertificatePolicy -SubjectName  "CN=demohsm.cor
 		St=Karnataka, OU=IT, O=Demo Bank, STREET=Technology Links Park, L = Bangalore, 
 C=IN" -ValidityInMonths 24  -IssuerName Self -KeyType "RSA-HSM" -KeyNotExportable -KeyUsage keyEncipherment,digitalSignature,dataEncipherment
 
-Add-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName -CertificatePolicy $manualPolicy
+Add-AzureKeyVaultCertificate -VaultName $vaultName -Name $hsmcertificateName -CertificatePolicy $manualPolicy
 
 # By default the key status is disabled. Need to enable it with this command
-Set-AzureKeyVaultCertificateAttribute -VaultName $vaultName -Name $certificateName -Enable $true
+Set-AzureKeyVaultCertificateAttribute -VaultName $vaultName -Name $hsmcertificateName -Enable $true
 
-$certificate = Get-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName
+$certificateOperation = Get-AzureKeyVaultCertificateOperation -VaultName $vaultName -Name $hsmcertificateName
+$certificateOperation.Status
+
+$certificate = Get-AzureKeyVaultCertificate -VaultName $vaultName -Name $hsmcertificateName
 $certificate.KeyId
 #KeyId contains the URI of the private Key generated for this Certificate in HSM
 
@@ -138,13 +141,13 @@ Write-Host "Paste the following settings into the app.config file for the HelloK
 '<add key="AuthClientId" value="' + $servicePrincipal.ApplicationId + '"/>'
 '<add key="AuthCertThumbprint" value="' + $myCertThumbprint + '"/>'
 '<add key="PrivateKeyUri" value="' + $certificate.KeyId + '"/>'
-'<add key="AKVCertificateName" value="' + $certificateName + '"/>'
+'<add key="AKVCertificateName" value="' + $hsmcertificateName + '"/>'
 Write-Host
 
 #If a Certificate Signing Request(CSR) is required to be generated for this Certificate for signing by an RSA, then uncomment
 # and run the following lines
-# $certificateOperation = Get-AzureKeyVaultCertificateOperation -VaultName $vaultName -Name $certificateName
+# $certificateOperation = Get-AzureKeyVaultCertificateOperation -VaultName $vaultName -Name $hsmcertificateName
 # $certificateOperation.CertificateSigningRequest
 
 # When the signed certificate from the CA is obtained, it can be merged with the original certificate in AKV using the command below
-#Import-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName -FilePath C:\signedcerts\myhsmcert.crt
+#Import-AzureKeyVaultCertificate -VaultName $vaultName -Name $hsmcertificateName -FilePath C:\signedcerts\myhsmcert.crt
