@@ -11,8 +11,8 @@ namespace AKVEncryptDecryptSample
         static void Main(string[] args)
         {
             Receiver rec = new Receiver();
-            rec.DownloadCertificate();
-            //rec.EncryptDecrypt();
+            //rec.DownloadCertificate();
+            rec.EncryptDecrypt();
             Console.ReadLine();
         }
     }

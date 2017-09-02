@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Security;
+
 
 namespace AKVEncryptDecryptSample
 {
@@ -42,8 +44,14 @@ namespace AKVEncryptDecryptSample
             store.Close();
             byte[] plainText = GetPlainText();  // sample data to encrypt
 
-            RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PublicKey.Key;
-            byte[] encryptedData = rsa.Encrypt(plainText, true);
+            //This is outdated now - will work with .NET Framework 4.5. But does not support OaepSHA256
+            //RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)cert.PublicKey.Key;
+            //byte[] encryptedData = rsa.Encrypt(plainText, true);
+            
+            // This requires .NET Framework 4.6.1 - RSACng Type
+            byte[] encryptedData = cert.GetRSAPublicKey().Encrypt(plainText, RSAEncryptionPadding.OaepSHA256);
+
+           
             return encryptedData;
         }
 

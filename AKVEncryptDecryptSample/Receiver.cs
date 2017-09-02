@@ -100,7 +100,7 @@ namespace AKVEncryptDecryptSample
         private void Decrypt(byte[] cipherText)
         {
             KeyOperationResult operationResult;
-            var algorithm = JsonWebKeyEncryptionAlgorithm.RSAOAEP;
+            var algorithm = JsonWebKeyEncryptionAlgorithm.RSAOAEP256;
             try
             {
                 operationResult = Task.Run(() => keyVaultClient.DecryptAsync(Keyidentifier, algorithm, cipherText)).ConfigureAwait(false).GetAwaiter().GetResult();
